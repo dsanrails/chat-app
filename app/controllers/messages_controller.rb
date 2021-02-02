@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   def index
-    @messages = Message.new
-    @room = Room.find(params[:room:id])
+    @message = Message.new
+    @room = Room.find(params[:room_id])
     @messages = @room.messages.includes(:user)
   end
 
@@ -12,13 +12,13 @@ class MessagesController < ApplicationController
       redirect_to room_messages_path(@room)
     else
       @messages = @room.messages.includes(:user)
-      rendew :index
+      render :index
     end
   end
 
   private
 
   def message_params
-    params.require(:massage).permit(:content).merge(user_id: current_user.id)
+    params.require(:message).permit(:content).merge(user_id: current_user.id)
   end
 end
